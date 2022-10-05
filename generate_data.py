@@ -11,15 +11,31 @@ def generate_data(logic_op, sequence_length, signal_pos=(), signal_sequences_n=1
     if logic_op == 'AND':
         if len(signal_pos) == 2:
             logic_positive = [[12, 10]]
+        if len(signal_pos) == 3:
+            logic_positive = [[12, 10, 8]]
+        if len(signal_pos) == 4:
+            logic_positive = [[12, 10, 8, 6]]
     if logic_op == 'OR':
         if len(signal_pos) == 2:
             logic_positive = [[12, 10], [12, -10], [-12, 10]]
+        if len(signal_pos) == 3:
+            logic_positive = [[12, 10, 8], [12, 10, -8], [12, -10, 8], [-12, 10, 8], [-12, -10, 8], [-12, 10, -8, [12, -10, -8]]]
+        if len(signal_pos) == 4:
+            logic_positive = [[12, 10, 8, 6], [-12, 10, 8, 6], [12, -10, 8, 6], [12, 10, -8, 6], [12, 10, 8, -6], [-12, -10, 8, 6], [12, -10, -8, 6], [12, 10, -8, -6], [-12, 10, 8, -6], [-12, 10, -8, 6], [12, -10, 8, -6], [-12, -10, -8, 6], [-12, -10, 8, -6], [-12, 10, -8, -6], [12, -10, -8, -6]]
     if logic_op == 'XOR':
         if len(signal_pos) == 2:
             logic_positive = [[12, -10], [-12, 10]]
+        if len(signal_pos) == 3:
+            logic_positive = [[-12, -10, 8], [-12, 10, -8], [12, -10, -8]]
+        if len(signal_pos) == 4:
+            logic_positive = [[-12, -10, -8, 6], [-12, -10, 8, -6], [-12, 10, -8, -6], [12, -10, -8, -6]]
     if logic_op == 'NAND':
         if len(signal_pos) == 2:
             logic_positive = [[-12, -10], [12, -10], [-12, 10]]
+        if len(signal_pos) == 3:
+            logic_positive = [[-12, -10, -8], [-12, 10, 8], [12, -10, 8], [12, 10, -8], [-12, -10, 8], [12, -10, -8], [-12, 10, -8]]
+        if len(signal_pos) == 4:
+            logic_positive = [[-12, 10, 8, 6], [12, -10, 8, 6], [12, 10, -8, 6], [12, 10, 8, -6], [-12, -10, 8, 6], [-12, 10, -8, 6], [-12, 10, 8, -6], [12, -10, -8, 6], [12, -10, 8, -6], [12, 10, -8, -6], [-12, -10, -8, 6], [-12, -10, 8, -6], [-12, 10, -8, -6], [12, -10, -8, -6]]
 
     data = list()
     # positive data instances
