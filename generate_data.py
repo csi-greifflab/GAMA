@@ -48,7 +48,6 @@ def generate_data(logic_op, sequence_length, signal_pos=(), signal_sequences_n=1
         data.append(s)
 
     # negative data instances
-    # breakpoint()
     for _ in range(round(signal_sequences_n / signal2noise - signal_sequences_n)):
         contin = True
         while contin: # rejection sampling
