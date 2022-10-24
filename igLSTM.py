@@ -52,18 +52,25 @@ class LSTMModel(nn.Module):
         results[:, :] *= (embeds - baseline) / self.INTERPOLATION_STEPS
         return results
 
-    def IG_sample_spc(self, peptide, output_pos_d, aa_d):
+    def IG_sample_spc(self, peptide, output_pos_dim, diff_aa):
         embeds = self.embedding(torch.LongTensor(peptide).to(self.DEVICE)).detach()
         baseline = torch.zeros_like(embeds).to(self.DEVICE)
-        results = torch.zeros_like(embeds).to(self.DEVICE)
+        results = torch.zeros(*embeds.shape, output_pos_dim, diff_aa).to(self.DEVICE)
         for lin_step in torch.linspace(0.001, 1, self.INTERPOLATION_STEPS):
             self.zero_grad()
             polation = torch.lerp(baseline, embeds, lin_step.to(self.DEVICE)).to(self.DEVICE)
             polation.requires_grad = True
             lstm_out, _ = self.lstm(polation.view(1, -1, self.embedding_dim))
             out = self.nn(lstm_out)
-            out[0 ,output_pos_d, aa_d].backward()
-            results[:, :] += polation.grad
-        results[:, :] *= (embeds - baseline) / self.INTERPOLATION_STEPS
+            for output_pos_d in range(output_pos_dim):
+                for aa_d in range(diff_aa):
+                    self.zero_grad()
+                    out[0, output_pos_d, aa_d].backward(retain_graph=True)
+                    results[:, :, output_pos_d, aa_d] += polation.grad
+            del out
+            self.zero_grad(set_to_none=True)
+        for output_pos_d in range(output_pos_dim):
+            for aa_d in range(diff_aa):
+                results[:, :, output_pos_d, aa_d] *= (embeds - baseline) / self.INTERPOLATION_STEPS
         return results
 

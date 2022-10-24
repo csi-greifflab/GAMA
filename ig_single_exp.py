@@ -76,9 +76,7 @@ def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=
         hycube_ig = torch.zeros((input_pos_dim, encoding_dim, output_pos_dim, diff_aa, len(ig_test_sequ)))
         for sequ_idx, sequ in enumerate(ig_test_sequ):
             print(sequ_idx)
-            for output_pos_d in range(output_pos_dim):
-                for aa_d in range(diff_aa):
-                    hycube_ig[:, :, output_pos_d, aa_d, sequ_idx] = model.IG_sample_spc(sequ, output_pos_d, aa_d)
+            hycube_ig[:, :, :, :, sequ_idx] = model.IG_sample_spc(peptide=sequ, output_pos_dim=output_pos_dim, diff_aa=diff_aa)
         torch.save(hycube_ig, f'{prj_path}/ig_matrix_{path}')
 
 if __name__ == '__main__':
@@ -89,7 +87,7 @@ if __name__ == '__main__':
     ig_sequences_n=150
     signal2noise=1
     DEVICE='cuda:0'
-    prj_path='./testrun_IGfunc2'
+    prj_path='./testrun_IGfunc3'
 
     experiment_run(logic_op=logic_op, sequence_length=sequence_length, signal_pos=signal_pos,\
                    signal_sequences_n=signal_sequences_n, ig_sequences_n=ig_sequences_n,\
