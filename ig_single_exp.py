@@ -56,7 +56,7 @@ def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=
     else:
         raise RuntimeWarning('model training did not converge!')
 
-    ig_test_sequ = [i.to('cpu') for i in train_list[0:ig_sequences_n]]
+    ig_test_sequ = [torch.LongTensor(i.to('cpu')).to(DEVICE) for i in train_list[0:ig_sequences_n]]
 
     save = [i.tolist() for i in ig_test_sequ]
     save_df = pd.DataFrame(save)
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     ig_sequences_n=150
     signal2noise=1
     DEVICE='cuda:0'
-    prj_path='./testrun_IGfunc3'
+    prj_path='./testrun_tmp'
 
     experiment_run(logic_op=logic_op, sequence_length=sequence_length, signal_pos=signal_pos,\
                    signal_sequences_n=signal_sequences_n, ig_sequences_n=ig_sequences_n,\

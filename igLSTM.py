@@ -53,7 +53,7 @@ class LSTMModel(nn.Module):
         return results
 
     def IG_sample_spc(self, peptide, output_pos_dim, diff_aa):
-        embeds = self.embedding(torch.LongTensor(peptide).to(self.DEVICE)).detach()
+        embeds = self.embedding(peptide).detach()
         baseline = torch.zeros_like(embeds).to(self.DEVICE)
         results = torch.zeros(*embeds.shape, output_pos_dim, diff_aa).to(self.DEVICE)
         for lin_step in torch.linspace(0.001, 1, self.INTERPOLATION_STEPS):
