@@ -87,7 +87,7 @@ if __name__ == '__main__':
     ig_sequences_n=150
     signal2noise=1
     DEVICE='cuda:0'
-    prj_path='./testrun_tmp'
+    prj_path='./testrun_IGfunc4'
 
     experiment_run(logic_op=logic_op, sequence_length=sequence_length, signal_pos=signal_pos,\
                    signal_sequences_n=signal_sequences_n, ig_sequences_n=ig_sequences_n,\
