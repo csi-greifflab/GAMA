@@ -13,16 +13,16 @@ from check_model import check_model
 from igLSTM import LSTMModel
 
 
-torch.manual_seed(0)
-# np.random.seed(0)
-torch.backends.cudnn.benchmark = False
-torch.use_deterministic_algorithms(True)
-
-os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 
 def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=10_000,\
                    ig_sequences_n=1000, signal2noise=1.0, DEVICE='cpu', prj_path=''):
+    torch.manual_seed(0)
+    # np.random.seed(0)
+    torch.backends.cudnn.benchmark = False
+    torch.use_deterministic_algorithms(True)
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+
     os.mkdir(f'{prj_path}/models')
     train_list = generate_data(logic_op=logic_op, sequence_length=sequence_length, signal_pos=signal_pos, signal_sequences_n=5000, signal2noise=signal2noise, DEVICE=DEVICE)
 
@@ -49,7 +49,7 @@ def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=
         s2n_eval = check_model(model=model, logic_op=logic_op, sequence_length=sequence_length, signal_pos=signal_pos)
         sn2_loss.append(s2n_eval)
         print(f'{s2n_eval=}, {s=}, {epoch=}, {loss_o=}')
-        if abs(s2n_eval - signal2noise) < 0.1 or abs(loss_t_min1 - loss_o) < 0.001:
+        if abs(s2n_eval - signal2noise) < 0.1 or abs(loss_t_min1 - loss_o) < 0.001 or s2n_eval > 0.999:
             torch.save(model.state_dict(), f'{prj_path}/models/lstm_epoch_{epoch}_{loss_o}.pt')
             break
         loss_t_min1 = loss_o
