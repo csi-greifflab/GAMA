@@ -61,7 +61,7 @@ def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=
 
     save = [i.tolist() for i in ig_test_sequ]
     save_df = pd.DataFrame(save)
-    save_df.to_csv(f'{prj_path}/training_sequences.csv')
+    save_df.to_csv(f'{prj_path}/training_sequences.csv', index=False)
 
     model_paths = os.listdir(f'{prj_path}/models')
     if len(model_paths) != 2:
