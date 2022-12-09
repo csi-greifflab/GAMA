@@ -55,8 +55,8 @@ def experiment_run(logic_op, sequence_length, signal_pos=(), signal_sequences_n=
     else:
         raise RuntimeWarning('model training did not converge!')
 
-    ig_sequences_n_pos = ig_sequences_n * signal2noise
-    ig_sequences_n_neg = ig_sequences_n * (1 - signal2noise)
+    ig_sequences_n_pos = int(ig_sequences_n * signal2noise)
+    ig_sequences_n_neg = int(ig_sequences_n * (1 - signal2noise))
     ig_test_sequ = [torch.LongTensor(i.to('cpu')).to(DEVICE) for i in train_list[0:ig_sequences_n_pos]+train_list[signal_sequences_n:signal_sequences_n+ig_sequences_n_neg]]
 
     save = [i.tolist() for i in ig_test_sequ]
