@@ -5,21 +5,25 @@ import resource
 from concurrent.futures import ProcessPoolExecutor
 from functools import reduce
 
+import torch
+
 from ig_single_exp import experiment_run
 
 def gpu_filler(experiment_i = 0, results_folder = '.'):
 	# arg_dict = list()
 	# arg_dict.append({
 	# 'logic_op':'AND',
-	# 'sequence_length':5,
+	# 'sequence_length':10,
 	# 'signal_pos':(1, 3),
 	# 'signal_sequences_n':5_000,
 	# 'ig_sequences_n':150,
 	# 'signal2noise':1,
-	# 'DEVICE':'cuda:0',
-	# 'prj_path':'./t1'
+	# 'DEVICE':'cuda:1',
+	# #'prj_path':'./tmp'
 	# })
-
+	# exp_tmp = arg_dict[0]
+	# results_folder = './tmp'
+	# experiment_i = -2
 	# In [4]: arg_dict[89]
 	# Out[4]:
 	# {'logic_op': 'AND',
