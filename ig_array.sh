@@ -3,7 +3,7 @@
 #SBATCH --account=nn9603k
 #SBATCH --job-name=ig_array
 
-#SBATCH --array=1-2
+#SBATCH --array=2-34
 #SBATCH --cpus-per-task=1
 #SBATCH --gpus=1
 #SBATCH --partition=accel
