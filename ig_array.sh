@@ -3,7 +3,7 @@
 #SBATCH --account=nn9603k
 #SBATCH --job-name=ig_array
 
-#SBATCH --array=2-34
+#SBATCH --array=23-36
 #SBATCH --cpus-per-task=1
 #SBATCH --gpus=1
 #SBATCH --partition=accel
@@ -11,7 +11,7 @@
 #SBATCH --ntasks=1
 
 ##  7d
-#SBATCH --time=7-00:00:00
+#SBATCH --time=6-00:00:00
 
 ## Set safer defaults for bash
 set -o errexit
@@ -26,4 +26,4 @@ set -o nounset
 # each job will see a different ${SLURM_ARRAY_TASK_ID}
 echo "now processing task id:: " ${SLURM_ARRAY_TASK_ID}
 ## python3 testbla.py ${SLURM_ARRAY_TASK_ID} ./test
-python3 singleGPU.py ${SLURM_ARRAY_TASK_ID} ./ig_mass
+python3 singleGPU.py ${SLURM_ARRAY_TASK_ID} /cluster/work/users/roberfra/ig_mass23_36
