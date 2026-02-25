@@ -64,7 +64,7 @@ def generate_data(logic_op, sequence_length, signal_pos=(), signal_sequences_n=1
     data = []
     # positive data instances
     for _ in range(signal_sequences_n):
-        s = torch.LongTensor([0] + [random.randint(1, 21) for _ in range(sequence_length)] + [21]).to(device)
+        s = torch.LongTensor([0] + [random.randint(1, 20) for _ in range(sequence_length)] + [21]).to(device)
         logic_index = random.randrange(0, len(logic_positive))
         for pos_sequ, signal in zip(signal_pos, logic_positive[logic_index]):
             if signal >= 0:
@@ -75,7 +75,7 @@ def generate_data(logic_op, sequence_length, signal_pos=(), signal_sequences_n=1
     for _ in range(round(signal_sequences_n / signal2noise - signal_sequences_n)):
         contin = True
         while contin: # rejection sampling
-            s = torch.LongTensor([0] + [random.randint(1, 21) for _ in range(sequence_length)] + [21]).to(device)
+            s = torch.LongTensor([0] + [random.randint(1, 20) for _ in range(sequence_length)] + [21]).to(device)
             checkpoint_bool_any = False
             for logic_pattern in logic_positive:
                 checkpoint_bool_all = True
